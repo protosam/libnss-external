@@ -125,7 +125,12 @@ search (const char *command, char *arg, struct passwd *result, char *buffer,
 
   *errnop = 0;
 
-  proc = cmdopen (command, arg);
+  // Prepend the database "passwd" to the command arguments
+  char args[CMDSIZ], *dup;
+  sprintf(args, "passwd %s", (dup=strdup(arg)));
+  free(dup);
+
+  proc = cmdopen (command, args);
 
   CHECKUNAVAIL(proc);
   CHECKLAST(proc[0]);
@@ -203,7 +208,7 @@ _nss_external_setpwent (void)
   if (proc != NULL)
       cmdclose (proc);
 
-  proc = cmdopen (PASSWDCMD, "");
+  proc = cmdopen (PASSWDCMD, "passwd");
   pproc = proc;
 
   return NSS_STATUS_SUCCESS;
