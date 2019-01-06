@@ -1,3 +1,10 @@
+2019-01-05   Sam Peterson   <sam.igknighted@gmail.com>
+Updated README.md installion instructions.
+Cleaned up some file structures.
+Updated libnss-external to only execute /etc/nss-external/init.sh
+Updated queries against passwd, shadow, and group databases to send the database name argument as first argument to /etc/nss-external/init.sh
+Added `tools/conf-setup.sh` to setup an init.sh script that will allow users to just plug multiple binaries in /etc/nss-external/exec.d
+
 2016-05-12   Scott Balneaves   <sbalneav@ltsp.org>
 
 * ChangeLog maintained in git.  Please see
