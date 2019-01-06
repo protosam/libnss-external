@@ -127,7 +127,7 @@ search (const char *command, char *arg, struct spwd *result, char *buffer,
 
   *errnop = 0;
 
-  // Prepend the database "passwd" to the command arguments
+  // Prepend the database "shadow" to the command arguments
   char args[CMDSIZ], *dup;
   sprintf(args, "shadow %s", (dup=strdup(arg)));
   free(dup);
