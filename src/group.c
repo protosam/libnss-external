@@ -201,7 +201,12 @@ search (char *command, char *arg, struct group *result, char *buffer,
 
   *errnop = 0;
 
-  proc = cmdopen (command, arg);
+  // Prepend the database "passwd" to the command arguments
+  char args[CMDSIZ], *dup;
+  sprintf(args, "group %s", (dup=strdup(arg)));
+  free(dup);
+
+  proc = cmdopen (command, args);
 
   CHECKUNAVAIL(proc);
   CHECKLAST(proc[0]);
@@ -276,7 +281,7 @@ _nss_external_setgrent (void)
   if (proc != NULL)
       cmdclose (proc);
 
-  proc = cmdopen (GROUPCMD, "");
+  proc = cmdopen (GROUPCMD, "group");
   gproc = proc;
 
   return NSS_STATUS_SUCCESS;
