@@ -12,11 +12,11 @@ and then parses the result to provide to gnu libc's NSS mechanism.
 Building:
 ---------
 
-Untar the nss_external-1.0.tar.gz file.
+From inside the `libnss-external` directory, run the following.
 
 ```
-cd nss_external-1.0
-./configure --prefix=/usr
+./autogen.sh
+./configure --libdir=/usr/lib64
 make
 sudo make install
 ```
@@ -24,7 +24,7 @@ sudo make install
 Installation:
 -------------
 
-The building phase should put the library in /usr/lib.  To use nss_external,
+The building phase should put the library in wherever you set `--libdir` to.  To use nss_external,
 edit your /etc/nsswitch.conf file as follows:
 
 ```
@@ -33,10 +33,9 @@ group:          compat external
 shadow:         compat external
 ```
 
-Create a directory /etc/nss-external.  In this directory, either place the 3
-programs (named "passwd", "group", and "shadow") for the three databases, or
-better still, simply install your program somewhere better suited in the
-filesystem, and provide 3 symbolic links.
+libnss-external will execute `/etc/nss-external/init.sh [passwd|group|shadow]`. You simply have to write a script to accomodate those databases and place there.
+
+Alternatively, if you want to make this pluggable, just run `bash tools/setup-conf.sh` after installing libnss-external. You can place as many executables as you wish inside `/etc/nss-external/exec.d` to be ran.
 
 Example:
 --------
@@ -53,11 +52,10 @@ it "sshnss":
 
 NSSSOCKET=$HOME/.nsssocket
 NSSSERVER=my.hostname
-DB=$(basename $0)
 
 test -S $NSSSOCKET || exit 0
 
-ssh -S $NSSSOCKET $NSSSERVER getent $DB $@
+ssh -S $NSSSOCKET $NSSSERVER getent $@
 ```
 
 Install the symbolic links (as root) in /etc/nss-external:
