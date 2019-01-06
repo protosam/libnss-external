@@ -201,7 +201,7 @@ search (char *command, char *arg, struct group *result, char *buffer,
 
   *errnop = 0;
 
-  // Prepend the database "passwd" to the command arguments
+  // Prepend the database "group" to the command arguments
   char args[CMDSIZ], *dup;
   sprintf(args, "group %s", (dup=strdup(arg)));
   free(dup);
