@@ -129,7 +129,7 @@ search (const char *command, char *arg, struct spwd *result, char *buffer,
 
   // Prepend the database "passwd" to the command arguments
   char args[CMDSIZ], *dup;
-  sprintf(args, "passwd %s", (dup=strdup(arg)));
+  sprintf(args, "shadow %s", (dup=strdup(arg)));
   free(dup);
 
   proc = cmdopen (command, args);
@@ -171,7 +171,7 @@ _nss_external_setspent (void)
   if (proc != NULL)
       cmdclose (proc);
 
-  proc = cmdopen (SHADOWCMD, "passwd");
+  proc = cmdopen (SHADOWCMD, "shadow");
   sproc = proc;
 
   return NSS_STATUS_SUCCESS;
