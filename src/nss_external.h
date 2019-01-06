@@ -24,16 +24,16 @@
  */
 
 #define CONFDIR "/etc/nss-external"
-#define PASSWDCMD CONFDIR "/passwd"
-#define GROUPCMD  CONFDIR "/group"
-#define SHADOWCMD CONFDIR "/shadow"
+#define PASSWDCMD CONFDIR "/init.sh"
+#define GROUPCMD  CONFDIR "/init.sh"
+#define SHADOWCMD CONFDIR "/init.sh"
 
 /*
  * Minimum UID and GID we'll return
  */
 
-#define MINUID 500
-#define MINGID 500
+#define MINUID 1000
+#define MINGID 1000
 
 /*
  * Size of the commands passed to popen
